@@ -11,11 +11,11 @@ import { WssService } from './presentation/services/wss.service';
 function main() {
   const server = new Server({
     port: envs.PORT,
-    routes: AppRoutes.routes,
   });
 
   const httpServer = createServer(server.app);
   WssService.initWss({ server: httpServer });
+  server.setRoutes(AppRoutes.routes);
 
   // server.start();
   httpServer.listen(envs.PORT, () => {
