@@ -16,7 +16,7 @@ export class TickerService {
   constructor() {}
 
   public get lastWorkingOnTickets(): Ticket[] {
-    return this.workingOnTickets.slice(0, 4);
+    return this.workingOnTickets.splice(0, 4);
   }
 
   public get pendingTicket(): Ticket {
