@@ -58,7 +58,7 @@ export class TickerService {
     ticket.handleAt = new Date();
 
     this.workingOnTickets.unshift({ ...ticket });
-    // todo ws
+    this.onTicketNumberChange();
 
     return { status: 'ok', ticket };
   }
@@ -67,8 +67,8 @@ export class TickerService {
     const ticket = this.tickets.find((t) => t.id === id);
     if (!ticket) return { status: 'error', message: 'ticket not found' };
 
-    this.tickets = this.tickets.map((t) =>
-      t.id === id ? { ...t, done: true } : t
+    this.tickets = this.tickets.map((ticket) =>
+      ticket.id === id ? { ...ticket, done: true } : ticket
     );
 
     return { status: 'ok' };
