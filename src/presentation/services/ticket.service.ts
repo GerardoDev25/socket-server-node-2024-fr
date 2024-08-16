@@ -28,12 +28,22 @@ export class TickerService {
     return this.tickets.length > 0 ? this.tickets.at(-1)!.number : 0;
   }
 
-  onTicketNumberChange() {
+  // * web sockets listeners
+
+  private onTicketNumberChange() {
     this.wssService.sendMessage(
       'on-ticket-count-changed',
       this.pendingTicket.length
     );
   }
+
+  private onWorkingOnChange() {
+    this.wssService.sendMessage(
+      'on-working-on-changed',
+      this.lastWorkingOnTickets
+    );
+  }
+
   public createTicket() {
     const ticket: Ticket = {
       id: UuidAdapter.v4(),
@@ -59,6 +69,7 @@ export class TickerService {
 
     this.workingOnTickets.unshift({ ...ticket });
     this.onTicketNumberChange();
+    this.onWorkingOnChange()
 
     return { status: 'ok', ticket };
   }
